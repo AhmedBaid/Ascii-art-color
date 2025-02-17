@@ -28,15 +28,16 @@ var colorMap = map[string]string{
 	"white":  WHITE,
 }
 
-func Handler(argument, banner, fileName, color string) {
+func Handler(argument, banner, fileName, color, something string) {
 	fileName = strings.ToLower(fileName)
 	file, err := os.Open(fileName)
 	if err != nil {
-		fmt.Println("error in opening the file  USAGE", err)
+		fmt.Println("Error opening the file:", err)
 		return
 	}
 	defer file.Close()
 
+	// Store ASCII characters from the file
 	SlicesAscii := []string{}
 	MapAscii := map[rune][]string{}
 	count := 0
@@ -65,33 +66,50 @@ func Handler(argument, banner, fileName, color string) {
 		return
 	}
 
-	Splitslice := strings.Split(argument, "\\n")
-	var lastResult string
+	// Split the input on "\n" to handle multiline ASCII text
+	Splitslice := strings.Split(something, "\\n")
+	var asciiOutput string
 
-	if strings.ReplaceAll(argument, "\\n", "") == "" {
-		for i := 0; i < strings.Count(argument, "\\n"); i++ {
-			lastResult += "\n"
+	// Generate ASCII art using PrintAscii function
+	if strings.ReplaceAll(something, "\\n", "") == "" {
+		for i := 0; i < strings.Count(something, "\\n"); i++ {
+			asciiOutput += "\n"
 		}
 	} else {
-		lastResult = PrintAscii(Splitslice, MapAscii)
+		asciiOutput = PrintAscii(Splitslice, MapAscii) 
 	}
 
+	// Handle coloring the substring inside the ASCII output
 	if color != "" {
 		if col, exists := colorMap[color]; exists {
-			lastResult = col + lastResult + RESET
+			// Search for the argument inside the ASCII output
+			coloredOutput := ""
+			lines := strings.Split(asciiOutput, "\n") // Split ASCII output into lines
+			for _, line := range lines {
+				index := strings.Index(line, argument) // Find `argument` inside each line
+
+				if index != -1 { // If found, apply color only to that part
+					coloredOutput += line[:index] + col + line[index:index+len(argument)] + RESET + line[index+len(argument):] + "\n"
+				} else { // Otherwise, keep it normal
+					coloredOutput += line + "\n"
+				}
+			}
+
+			asciiOutput = coloredOutput 
 		} else {
 			fmt.Println("Invalid color specified")
 			return
 		}
 	}
 
+	// Save to file or print output
 	if banner != "" {
-		err := os.WriteFile(banner, []byte(lastResult), 0o644)
+		err := os.WriteFile(banner, []byte(asciiOutput), 0o644)
 		if err != nil {
 			fmt.Println("Error", err)
 			return
 		}
 	} else {
-		fmt.Print(lastResult)
+		fmt.Println(asciiOutput)
 	}
 }
