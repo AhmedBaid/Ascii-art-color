@@ -29,11 +29,11 @@ var colorMap = map[string]string{
 }
 
 func Handler(argument, banner, fileName, color, something string) {
-	// fmt.Println("argument", argument)
-	// fmt.Println("banner", banner)
-	// fmt.Println("fileName", fileName)
-	// fmt.Println("color", color)
-	// fmt.Println("something", something)
+	fmt.Println("argument", argument)
+	fmt.Println("banner", banner)
+	fmt.Println("fileName", fileName)
+	fmt.Println("color", color)
+	fmt.Println("something", something)
 	fileName = strings.ToLower(fileName)
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -85,13 +85,25 @@ func Handler(argument, banner, fileName, color, something string) {
 	}
 
 	if color != "" {
-		if col, exists := colorMap[color]; exists {
-			handleColor(argument,something,col,MapAscii)
+		if color, exists := colorMap[color]; exists {
+			if argument != "" && something != "" {
+				index := strings.Index(something, argument)
+				if index != -1 {
+					piecee_colred := color + something[index:index+len(argument)]
+					coloredOutput = something[:index] + piecee_colred + something[index+len(argument):]
+				}
+			} else if something != "" {
+				fmt.Println(color + something + RESET)
+				return
+			} else {
+				fmt.Println(something)
+			}
 			return
 		} else {
 			fmt.Println("Invalid color specified")
 			return
 		}
+		fmt.Println(coloredOutput)
 	}
 
 	// Save to file or print output
@@ -101,7 +113,5 @@ func Handler(argument, banner, fileName, color, something string) {
 			fmt.Println("Error", err)
 			return
 		}
-	} else {
-		fmt.Println(asciiOutput)
-	}
+	} 
 }

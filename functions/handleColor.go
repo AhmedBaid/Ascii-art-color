@@ -6,28 +6,23 @@ import (
 )
 
 func handleColor(argument, something, color string, Mapascii map[rune][]string) {
-	Splitslice := strings.Split(something, "\\n")
-	asciiOutput := PrintAscii(Splitslice, Mapascii)
-
-	argumentLower := strings.ToLower(argument)
-	somethingLower := strings.ToLower(something)
-
-	asciiLines := strings.Split(asciiOutput, "\n")
-	coloredLines := make([]string, len(asciiLines))
-
-	startIndex := strings.Index(somethingLower, argumentLower)
-
-	if startIndex != -1 {
-		argRunes := []rune(something)[startIndex : startIndex+len(argument)]
-		argString := string(argRunes)
-
-		for i, line := range asciiLines {
-			coloredLines[i] = strings.Replace(line, argString, RESET+argString+color, 1)
+	fmt.Println("color", color)
+	var coloredOutput string
+	var final string
+	if argument != "" && something != "" {
+		index := strings.Index(something, argument)
+		if index != -1 {
+			piecee_colred := color + something[index:index+len(argument)]
+			coloredOutput = something[:index] + piecee_colred + something[index+len(argument):]
+			final=PrintAsciiColor(piecee_colred,coloredOutput)
 		}
+	} else if something != "" {
+		fmt.Println(color + something + RESET)
+		final=PrintAsciiColor()
+		return
 	} else {
-		coloredLines = asciiLines
+		final=PrintAsciiColor()
 	}
 
-	finalOutput := strings.Join(coloredLines, "\n")
-	fmt.Println(finalOutput)
+	fmt.Println(final)
 }

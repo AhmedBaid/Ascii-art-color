@@ -69,6 +69,5 @@ func main() {
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
 		return
 	}
-
 	functions.Handler(argument, banner, fileName, color, something)
 }
