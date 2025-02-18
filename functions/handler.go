@@ -29,6 +29,11 @@ var colorMap = map[string]string{
 }
 
 func Handler(argument, banner, fileName, color, something string) {
+	// fmt.Println("argument", argument)
+	// fmt.Println("banner", banner)
+	// fmt.Println("fileName", fileName)
+	// fmt.Println("color", color)
+	// fmt.Println("something", something)
 	fileName = strings.ToLower(fileName)
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -76,26 +81,13 @@ func Handler(argument, banner, fileName, color, something string) {
 			asciiOutput += "\n"
 		}
 	} else {
-		asciiOutput = PrintAscii(Splitslice, MapAscii) 
+		asciiOutput = PrintAscii(Splitslice, MapAscii)
 	}
 
-	// Handle coloring the substring inside the ASCII output
 	if color != "" {
 		if col, exists := colorMap[color]; exists {
-			// Search for the argument inside the ASCII output
-			coloredOutput := ""
-			lines := strings.Split(asciiOutput, "\n") // Split ASCII output into lines
-			for _, line := range lines {
-				index := strings.Index(line, argument) // Find `argument` inside each line
-
-				if index != -1 { // If found, apply color only to that part
-					coloredOutput += line[:index] + col + line[index:index+len(argument)] + RESET + line[index+len(argument):] + "\n"
-				} else { // Otherwise, keep it normal
-					coloredOutput += line + "\n"
-				}
-			}
-
-			asciiOutput = coloredOutput 
+			handleColor(argument,something,col,MapAscii)
+			return
 		} else {
 			fmt.Println("Invalid color specified")
 			return
