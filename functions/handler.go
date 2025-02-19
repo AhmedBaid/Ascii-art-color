@@ -64,7 +64,6 @@ func Handler(argument, banner, fileName, color, something string) {
 
 	// Split the input on "\n" to handle multiline ASCII text
 	Splitslice := strings.Split(something, "\\n")
-	Splitargument := strings.Split(argument, "\\n")
 	// Generate ASCII art using PrintAscii function
 	var asciiOutput string
 	if strings.ReplaceAll(something, "\\n", "") == "" {
@@ -78,16 +77,8 @@ func Handler(argument, banner, fileName, color, something string) {
 	// Handle color highlighting
 	if color != "" {
 		if colorCode, exists := colorMap[color]; exists {
-			coloredAscii := PrintAsciiColor(Splitslice, MapAscii, Splitargument, argument, colorCode)
-
-			for i := 0; i < len(coloredAscii); i++ {
-				if i*4*8 >= Index+len(ArgString) {
-					fmt.Print(colorMap[color] + string(coloredAscii[i]))
-				} else {
-					fmt.Print(string(coloredAscii[i]))
-				}
-			}
-
+			coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
+			fmt.Println(colorCode+coloredAscii)
 			// fmt.Println(coloredAscii)
 		} else {
 			fmt.Println("Invalid color specified")
