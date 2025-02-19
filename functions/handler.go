@@ -64,9 +64,9 @@ func Handler(argument, banner, fileName, color, something string) {
 
 	// Split the input on "\n" to handle multiline ASCII text
 	Splitslice := strings.Split(something, "\\n")
-	var asciiOutput string
-
+	Splitargument := strings.Split(argument, "\\n")
 	// Generate ASCII art using PrintAscii function
+	var asciiOutput string
 	if strings.ReplaceAll(something, "\\n", "") == "" {
 		for i := 0; i < strings.Count(something, "\\n"); i++ {
 			asciiOutput += "\n"
@@ -75,30 +75,29 @@ func Handler(argument, banner, fileName, color, something string) {
 		asciiOutput = PrintAscii(Splitslice, MapAscii)
 	}
 
-	var coloredOutput string
+	// Handle color highlighting
 	if color != "" {
-		if color, exists := colorMap[color]; exists {
-			if argument != "" && something != "" {
-				index := strings.Index(argument, something)
-				if index != -1 {
-					piecee_colred := color + something[index:index+len(argument)]
-					coloredOutput = something[:index] + piecee_colred + something[index+len(argument):]
+		if colorCode, exists := colorMap[color]; exists {
+			coloredAscii := PrintAsciiColor(Splitslice, MapAscii, Splitargument, argument, colorCode)
+
+			for i := 0; i < len(coloredAscii); i++ {
+				if i*4*8 >= Index+len(ArgString) {
+					fmt.Print(colorMap[color] + string(coloredAscii[i]))
+				} else {
+					fmt.Print(string(coloredAscii[i]))
 				}
-			} else if something != "" {
-				fmt.Println( something )
-				return
-			} else {
-				fmt.Println(something)
 			}
-			return
+
+			// fmt.Println(coloredAscii)
 		} else {
 			fmt.Println("Invalid color specified")
 			return
 		}
+	} else {
+		fmt.Println(asciiOutput)
 	}
-	fmt.Println(coloredOutput)
 
-	// Save to file or print output
+	// Save to file if banner is provided
 	if banner != "" {
 		err := os.WriteFile(banner, []byte(asciiOutput), 0o644)
 		if err != nil {
