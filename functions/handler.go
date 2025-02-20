@@ -31,6 +31,7 @@ var colorMap = map[string]string{
 func Handler(argument, banner, fileName, color, something string) {
 	fileName = strings.ToLower(fileName)
 	file, err := os.Open(fileName)
+	color = strings.ToLower(color)
 	if err != nil {
 		fmt.Println("Error opening the file:", err)
 		return
@@ -63,37 +64,60 @@ func Handler(argument, banner, fileName, color, something string) {
 	}
 
 	// Split the input on "\n" to handle multiline ASCII text
-	Splitslice := strings.Split(something, "\\n")
-	// Generate ASCII art using PrintAscii function
-	var asciiOutput string
-	if strings.ReplaceAll(something, "\\n", "") == "" {
-		for i := 0; i < strings.Count(something, "\\n"); i++ {
-			asciiOutput += "\n"
-		}
-	} else {
-		asciiOutput = PrintAscii(Splitslice, MapAscii)
-	}
 
 	// Handle color highlighting
 	if color != "" {
-		if colorCode, exists := colorMap[color]; exists {
-			coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
-			fmt.Println(colorCode+coloredAscii)
-			// fmt.Println(coloredAscii)
+		Splitslice := strings.Split(something, "\\n")
+		// Generate ASCII art using PrintAscii function
+		var asciiOutput string
+		if strings.ReplaceAll(something, "\\n", "") == "" {
+			for i := 0; i < strings.Count(something, "\\n"); i++ {
+				asciiOutput += "\n"
+			}
 		} else {
-			fmt.Println("Invalid color specified")
-			return
+			asciiOutput = PrintAscii(Splitslice, MapAscii)
 		}
-	} else {
-		fmt.Println(asciiOutput)
+		if argument != "" && something != "" {
+			if colorCode, exists := colorMap[color]; exists {
+				coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
+				fmt.Println(coloredAscii)
+			} else {
+				fmt.Println("Invalid color specified")
+				return
+			}
+		} else if something != "" && argument == "" {
+			asciiOutput = PrintAscii(Splitslice, MapAscii)
+			fmt.Println(colorMap[color]+asciiOutput)
+		}
 	}
 
 	// Save to file if banner is provided
-	if banner != "" {
-		err := os.WriteFile(banner, []byte(asciiOutput), 0o644)
+	if banner != "" && argument != "" {
+		Splitslice := strings.Split(argument, "\\n")
+		var lastResult string
+		if strings.ReplaceAll(argument, "\\n", "") == "" {
+			for i := 0; i < strings.Count(argument, "\\n"); i++ {
+				lastResult += "\n"
+			}
+		} else {
+			lastResult = PrintAscii(Splitslice, MapAscii)
+		}
+		err := os.WriteFile(banner, []byte(lastResult), 0o644)
 		if err != nil {
 			fmt.Println("Error", err)
 			return
 		}
+	}
+	if argument != "" && banner == "" && color == "" {
+		Splitslice := strings.Split(argument, "\\n")
+		var lastResult string
+		if strings.ReplaceAll(argument, "\\n", "") == "" {
+			for i := 0; i < strings.Count(argument, "\\n"); i++ {
+				lastResult += "\n"
+			}
+		} else {
+			lastResult = PrintAscii(Splitslice, MapAscii)
+		}
+		fmt.Println(lastResult)
 	}
 }
