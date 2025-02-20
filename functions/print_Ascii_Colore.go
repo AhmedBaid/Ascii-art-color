@@ -1,5 +1,7 @@
 package functions
 
+import colors "ascii/tools"
+
 func PrintAsciiColor(SplitSlice []string, MapAscii map[rune][]string, argument, colorCode string) string {
 	var result string
 
@@ -22,7 +24,7 @@ func PrintAsciiColor(SplitSlice []string, MapAscii map[rune][]string, argument, 
 						}
 
 						if shouldColor {
-							result += (colorCode + asciiLine + RESET)
+							result += (colorCode + asciiLine + colors.RESET)
 						} else {
 							result += (asciiLine)
 						}

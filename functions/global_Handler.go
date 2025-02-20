@@ -1,32 +1,13 @@
 package functions
 
 import (
+	colors "ascii/tools"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
 )
 
-const (
-	RESET  = "\033[0m"
-	RED    = "\033[31m"
-	GREEN  = "\033[32m"
-	YELLOW = "\033[33m"
-	BLUE   = "\033[34m"
-	PURPLE = "\033[35m"
-	CYAN   = "\033[36m"
-	WHITE  = "\033[37m"
-)
-
-var colorMap = map[string]string{
-	"red":    RED,
-	"green":  GREEN,
-	"yellow": YELLOW,
-	"blue":   BLUE,
-	"purple": PURPLE,
-	"cyan":   CYAN,
-	"white":  WHITE,
-}
 
 func Handler(argument, banner, fileName, color, something string) {
 	fileName = strings.ToLower(fileName)
@@ -78,7 +59,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
 		}
 		if argument != "" && something != "" {
-			if colorCode, exists := colorMap[color]; exists {
+			if colorCode, exists := colors.ColorMap[color]; exists {
 				coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
 				fmt.Println(coloredAscii)
 			} else {
@@ -87,7 +68,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			}
 		} else if something != "" && argument == "" {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
-			fmt.Println(colorMap[color]+asciiOutput)
+			fmt.Println(colors.ColorMap[color]+asciiOutput)
 		}
 	}
 
@@ -108,7 +89,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			return
 		}
 	}
-	if argument != "" && banner == "" && color == "" {
+	if argument != "" && banner == "" && color == "" {		
 		Splitslice := strings.Split(argument, "\\n")
 		var lastResult string
 		if strings.ReplaceAll(argument, "\\n", "") == "" {
