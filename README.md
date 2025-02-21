@@ -1,23 +1,22 @@
-# ASCII Art Output Project
+# ASCII Art Color Project
 
 ## **Introduction**
-This project builds upon the previous ASCII art generator by adding functionality to write the output into a file. The program allows users to specify an output file using a specific flag format. Additionally, it remains compatible with other optional flags and arguments for generating ASCII art banners.
+This project extends the previous ASCII art generator by adding functionality to colorize the output. The program allows users to specify colors using a specific flag format. Additionally, it remains compatible with other optional flags and arguments for generating ASCII art banners.
 
 ---
 
 ## **Objectives**
 
 ### **Core Requirements:**
-1. **Output File:**
-   - The program must allow users to specify the output file using the `--output=<fileName.txt>` flag.
-   - The file will contain the ASCII art generated from the input string and banner style.
+1. **Color Output:**
+   - The program must allow users to specify text color using the `--color=<color>` flag.
+   - The ASCII art will be displayed in the chosen color.
 
 2. **Usage Message:**
    - If the flag is used in an incorrect format, the program must return the following usage message:
-
      ```
-     Usage: go run . [OPTION] [STRING] [BANNER]
-     EX: go run . --output=<fileName.txt> something standard
+     Usage: go run . [OPTION] [STRING]
+     EX: go run . --color=<color> <something to be colored> "something"
      ```
 
 3. **Compatibility:**
@@ -42,36 +41,23 @@ This project builds upon the previous ASCII art generator by adding functionalit
 
 ### **Examples:**
 
-#### Example 1: Generating ASCII Art with Output File
+#### Example 1: Generating ASCII Art with Color Output
 ```bash
-$ go run . --output=banner.txt "hello" standard
-$ cat -e banner.txt
- _          _   _     _  $
-| |        | | | |   (_) $
-| |     ___| |_| |__  _  $
-| |    / _ \ __| '_ \| | $
-| |___|  __/ |_| | | | | $
-|______\___|\__|_| |_|_| $
-$
+$ go run . --color=red "hello" standard
 ```
+🔴 The output will be displayed in red.
 
-#### Example 2: Using Different Banner Styles
+#### Example 2: Using Different Colors
 ```bash
-$ go run . --output=banner.txt 'Hello There!' shadow
-$ cat -e banner.txt
-_|    _|    _|_|_|_|  _|      _|  $
-_|    _|  _|        _|_|    _|_|  $
-_|_|_|_|  _|  _|_|      _|_|      $
-_|    _|  _|    _|      _|        $
-_|    _|    _|_|_|      _|        $
-$
+$ go run . --color=blue 'Hello There!' shadow
 ```
+🔵 The output will be displayed in blue.
 
 ### **Error Message for Incorrect Flag Format:**
 ```bash
-$ go run . --output=banner.txt "hello"
-Usage: go run . [OPTION] [STRING] [BANNER]
-EX: go run . --output=<fileName.txt> something standard
+$ go run . --color=red "hello"
+Usage: go run . [OPTION] [STRING]
+EX: go run . --color=<color> <something to be colored> "something"
 ```
 
 ---
@@ -82,8 +68,8 @@ EX: go run . --output=<fileName.txt> something standard
 - Only standard Go packages are allowed.
 
 ### **What You Will Learn:**
-1. **Go File System (fs) API:**
-   - Reading and writing files in Go.
+1. **ANSI Escape Codes:**
+   - Implementing terminal text coloring using ANSI escape codes.
 2. **Data Manipulation:**
    - Handling and processing strings and data for ASCII art generation.
 
@@ -91,11 +77,12 @@ EX: go run . --output=<fileName.txt> something standard
 
 ## **Good Practices**
 - **Code Organization:** Separate the program logic into modular functions to ensure readability and maintainability.
-- **Error Handling:** Handle all potential errors gracefully, such as file I/O errors or invalid flag formats.
+- **Error Handling:** Handle all potential errors gracefully, such as invalid flag formats or unsupported colors.
 - **Testing:** Create unit tests to validate individual components of the program.
 
 ---
 
 ## **Conclusion**
-This project enhances the ASCII art generator by introducing file output functionality while maintaining compatibility with other optional features. By adhering to Go best practices and ensuring robust error handling, this project serves as a stepping stone to learning file handling, data manipulation, and modular programming in Go.
+This project enhances the ASCII art generator by introducing color functionality while maintaining compatibility with other optional features. By adhering to Go best practices and ensuring robust error handling, this project serves as a stepping stone to learning terminal text styling, data manipulation, and modular programming in Go.
+
 # Ascii-art-color
