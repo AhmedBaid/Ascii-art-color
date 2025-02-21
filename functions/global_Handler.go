@@ -8,11 +8,10 @@ import (
 	"strings"
 )
 
-
 func Handler(argument, banner, fileName, color, something string) {
 	fileName = strings.ToLower(fileName)
-	file, err := os.Open(fileName)
 	color = strings.ToLower(color)
+	file, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println("Error opening the file:", err)
 		return
@@ -44,8 +43,6 @@ func Handler(argument, banner, fileName, color, something string) {
 		return
 	}
 
-	// Split the input on "\n" to handle multiline ASCII text
-
 	// Handle color highlighting
 	if color != "" {
 		Splitslice := strings.Split(something, "\\n")
@@ -59,6 +56,10 @@ func Handler(argument, banner, fileName, color, something string) {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
 		}
 		if argument != "" && something != "" {
+			if Isprintable(something) {
+				fmt.Println("Isprintable characters not allowed")
+				return
+			}
 			if colorCode, exists := colors.ColorMap[color]; exists {
 				coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
 				fmt.Println(coloredAscii)
@@ -68,7 +69,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			}
 		} else if something != "" && argument == "" {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
-			fmt.Println(colors.ColorMap[color]+asciiOutput)
+			fmt.Println(colors.ColorMap[color] + asciiOutput)
 		}
 	}
 
@@ -89,7 +90,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			return
 		}
 	}
-	if argument != "" && banner == "" && color == "" {		
+	if argument != "" && banner == "" && color == "" {
 		Splitslice := strings.Split(argument, "\\n")
 		var lastResult string
 		if strings.ReplaceAll(argument, "\\n", "") == "" {

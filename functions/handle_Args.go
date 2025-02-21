@@ -61,6 +61,9 @@ func Handle_Args(Args []string) {
 			} else {
 				fileName = "files/" + os.Args[3] + ".txt"
 			}
+		} else {
+			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
+			return
 		}
 	case len(os.Args) == 5:
 		if strings.HasPrefix(os.Args[1], "--color=") {
@@ -75,6 +78,9 @@ func Handle_Args(Args []string) {
 			}
 		} else if strings.HasPrefix(os.Args[1], "--output=") {
 			fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
+		} else {
+			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
+			return
 		}
 	default:
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
