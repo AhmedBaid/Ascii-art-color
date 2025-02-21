@@ -9,6 +9,14 @@ import (
 )
 
 func Handler(argument, banner, fileName, color, something string) {
+	fmt.Println(banner)
+	banners:=[]string{"files/standard.txt","files/shadow.txt","files/thinkertoy.txt","./files/standard.txt","./files/shadow.txt","./files/thinkertoy.txt"}
+	for _, bnr := range banners {
+		if banner==bnr {
+			fmt.Println("writing in our files is forbidden")
+			return
+		}
+	}
 	fileName = strings.ToLower(fileName)
 	color = strings.ToLower(color)
 	file, err := os.Open(fileName)
