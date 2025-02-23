@@ -1,18 +1,18 @@
 package functions
 
 import (
-	colors "ascii/tools"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	colors "ascii/tools"
 )
 
 func Handler(argument, banner, fileName, color, something string) {
-	fmt.Println(banner)
-	banners:=[]string{"files/standard.txt","files/shadow.txt","files/thinkertoy.txt","./files/standard.txt","./files/shadow.txt","./files/thinkertoy.txt"}
+	banners := []string{"files/standard.txt", "files/shadow.txt", "files/thinkertoy.txt", "./files/standard.txt", "./files/shadow.txt", "./files/thinkertoy.txt"}
 	for _, bnr := range banners {
-		if banner==bnr {
+		if banner == bnr {
 			fmt.Println("writing in our files is forbidden")
 			return
 		}
@@ -64,6 +64,15 @@ func Handler(argument, banner, fileName, color, something string) {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
 		}
 		if argument != "" && something != "" {
+			if strings.Contains(argument, `\n`) ||
+				strings.Contains(argument, `\t`) ||
+				strings.Contains(argument, `\r`) ||
+				strings.Contains(argument, `\v`) ||
+				strings.Contains(argument, `\f`) {
+				fmt.Println("Non-printable sequences (e.g., \\n, \\t) are not considered for coloring")
+				return
+			}
+
 			if Isprintable(something) {
 				fmt.Println("Isprintable characters not allowed")
 				return
