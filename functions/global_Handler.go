@@ -79,15 +79,18 @@ func Handler(argument, banner, fileName, color, something string) {
 			}
 			if colorCode, exists := colors.ColorMap[color]; exists {
 				coloredAscii := PrintAsciiColor(Splitslice, MapAscii, argument, colorCode)
-				fmt.Println(coloredAscii)
+				fmt.Print(coloredAscii)
 			} else {
 				fmt.Println("Invalid color specified")
 				return
 			}
 		} else if something != "" && argument == "" {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
-			fmt.Println(colors.ColorMap[color] + asciiOutput)
+			fmt.Print(colors.ColorMap[color] + asciiOutput)
 		}
+	} else {
+		fmt.Println("there is not color")
+		return
 	}
 
 	// Save to file if banner is provided
@@ -117,6 +120,6 @@ func Handler(argument, banner, fileName, color, something string) {
 		} else {
 			lastResult = PrintAscii(Splitslice, MapAscii)
 		}
-		fmt.Println(lastResult)
+		fmt.Print(lastResult)
 	}
 }
