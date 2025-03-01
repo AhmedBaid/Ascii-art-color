@@ -85,14 +85,19 @@ func Handler(argument, banner, fileName, color, something string) {
 				return
 			}
 		} else if something != "" && argument == "" {
-			asciiOutput = PrintAscii(Splitslice, MapAscii)
-			fmt.Print(colors.ColorMap[color] + asciiOutput)
+			if Isprintable(something) {
+				fmt.Println("Isprintable characters not allowed")
+				return
+			}
+			if colorCode, exists := colors.ColorMap[color]; exists {
+				asciiOutput = PrintAscii(Splitslice, MapAscii)
+				fmt.Print(colorCode + asciiOutput)
+			} else {
+				fmt.Println("Invalid color specified")
+				return
+			}
 		}
-	} else {
-		fmt.Println("there is not color")
-		return
-	}
-
+	} 
 	// Save to file if banner is provided
 	if banner != "" && argument != "" {
 		Splitslice := strings.Split(argument, "\\n")
