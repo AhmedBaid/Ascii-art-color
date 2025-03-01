@@ -91,13 +91,13 @@ func Handler(argument, banner, fileName, color, something string) {
 			}
 			if colorCode, exists := colors.ColorMap[color]; exists {
 				asciiOutput = PrintAscii(Splitslice, MapAscii)
-				fmt.Print(colorCode + asciiOutput)
+				fmt.Print(colorCode + asciiOutput + colors.RESET)
 			} else {
 				fmt.Println("Invalid color specified")
 				return
 			}
 		}
-	} 
+	}
 	// Save to file if banner is provided
 	if banner != "" && argument != "" {
 		Splitslice := strings.Split(argument, "\\n")
