@@ -7,7 +7,7 @@ func PrintAscii(Splitslice []string, Mapascii map[rune][]string) string {
 			for line := 0; line < 8; line++ {
 				for _, char := range word {
 					if Valeur, exist := Mapascii[char]; exist {
-						result += Valeur[line]
+						result += (Valeur[line])
 					}
 				}
 				result += "\n"
