@@ -10,6 +10,7 @@ import (
 )
 
 func Handler(argument, banner, fileName, color, something string) {
+	// protect the files
 	banners := []string{"files/standard.txt", "files/shadow.txt", "files/thinkertoy.txt", "./files/standard.txt", "./files/shadow.txt", "./files/thinkertoy.txt"}
 	for _, bnr := range banners {
 		if banner == bnr {
@@ -46,10 +47,9 @@ func Handler(argument, banner, fileName, color, something string) {
 		}
 	}
 
-	// Handle color highlighting
+	// ascii art color handler
 	if color != "" {
 		Splitslice := strings.Split(something, "\\n")
-		// Generate ASCII art using PrintAscii function
 		var asciiOutput string
 		if strings.ReplaceAll(something, "\\n", "") == "" {
 			for i := 0; i < strings.Count(something, "\\n"); i++ {
@@ -92,7 +92,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			}
 		}
 	}
-	// Save to file if banner is provided
+	// ascii art output handler
 	if banner != "" && argument != "" {
 		if Isprintable(argument) {
 			fmt.Println("Isprintable characters not allowed")
@@ -113,6 +113,7 @@ func Handler(argument, banner, fileName, color, something string) {
 			return
 		}
 	}
+	// ascii art fs handler
 	if argument != "" && banner == "" && color == "" {
 		if Isprintable(argument) {
 			fmt.Println("Isprintable characters not allowed")

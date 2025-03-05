@@ -11,7 +11,6 @@ func Handle_Args(Args []string) {
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
 		return
 	}
-
 	argument := ""
 	fileName := "files/standard.txt"
 	banner := ""
