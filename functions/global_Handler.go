@@ -46,11 +46,6 @@ func Handler(argument, banner, fileName, color, something string) {
 		}
 	}
 
-	if Isprintable(argument) {
-		fmt.Println("Isprintable characters not allowed")
-		return
-	}
-
 	// Handle color highlighting
 	if color != "" {
 		Splitslice := strings.Split(something, "\\n")
@@ -72,7 +67,6 @@ func Handler(argument, banner, fileName, color, something string) {
 				fmt.Println("Non-printable sequences (e.g., \\n, \\t) are not considered for coloring")
 				return
 			}
-
 			if Isprintable(something) {
 				fmt.Println("Isprintable characters not allowed")
 				return
@@ -100,6 +94,10 @@ func Handler(argument, banner, fileName, color, something string) {
 	}
 	// Save to file if banner is provided
 	if banner != "" && argument != "" {
+		if Isprintable(argument) {
+			fmt.Println("Isprintable characters not allowed")
+			return
+		}
 		Splitslice := strings.Split(argument, "\\n")
 		var lastResult string
 		if strings.ReplaceAll(argument, "\\n", "") == "" {
@@ -116,6 +114,10 @@ func Handler(argument, banner, fileName, color, something string) {
 		}
 	}
 	if argument != "" && banner == "" && color == "" {
+		if Isprintable(argument) {
+			fmt.Println("Isprintable characters not allowed")
+			return
+		}
 		Splitslice := strings.Split(argument, "\\n")
 		var lastResult string
 		if strings.ReplaceAll(argument, "\\n", "") == "" {

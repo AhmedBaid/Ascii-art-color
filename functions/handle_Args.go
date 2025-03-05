@@ -26,6 +26,10 @@ func Handle_Args(Args []string) {
 		if strings.HasPrefix(os.Args[1], "--color=") {
 			color = os.Args[1][8:]
 			something = os.Args[2]
+			if color == "" {
+				fmt.Println("you didn't specify the color")
+				return
+			}
 		} else if strings.HasPrefix(os.Args[1], "--output=") {
 			argument = os.Args[2]
 			if strings.HasSuffix(os.Args[1], ".txt") {
@@ -48,6 +52,10 @@ func Handle_Args(Args []string) {
 			color = os.Args[1][8:]
 			something = os.Args[3]
 			argument = os.Args[2]
+			if color == "" {
+				fmt.Println("you didn't specify the color")
+				return
+			}
 		} else if strings.HasPrefix(os.Args[1], "--output=") {
 			argument = os.Args[2]
 			if strings.HasSuffix(os.Args[1], ".txt") {
