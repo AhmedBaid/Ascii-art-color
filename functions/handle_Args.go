@@ -78,6 +78,10 @@ func Handle_Args(Args []string) {
 			argument = os.Args[2]
 			something = os.Args[3]
 			fileName = os.Args[4]
+			if color == "" {
+				fmt.Println("you didn't specify the color")
+				return
+			}
 			if strings.HasSuffix(os.Args[4], ".txt") {
 				fileName = "files/" + os.Args[4]
 			} else {
