@@ -10,12 +10,6 @@ import (
 )
 
 func Handler(argument, banner, fileName, color, something string) {
-	fmt.Println(argument)
-	fmt.Println(something)
-	fmt.Println(banner)
-	fmt.Println(color)
-	fmt.Println(fileName)
-
 	// protect the files
 	banners := []string{"files/standard.txt", "files/shadow.txt", "files/thinkertoy.txt", "./files/standard.txt", "./files/shadow.txt", "./files/thinkertoy.txt"}
 	for _, bnr := range banners {
@@ -65,14 +59,14 @@ func Handler(argument, banner, fileName, color, something string) {
 			asciiOutput = PrintAscii(Splitslice, MapAscii)
 		}
 		if argument != "" && something != "" {
-			if strings.Contains(argument, `\n`) ||
-				strings.Contains(argument, `\t`) ||
-				strings.Contains(argument, `\r`) ||
-				strings.Contains(argument, `\v`) ||
-				strings.Contains(argument, `\f`) {
-				fmt.Println("Non-printable sequences (e.g., \\n, \\t) are not considered for coloring")
-				return
-			}
+			// if strings.Contains(argument, `\n`) ||
+			// 	strings.Contains(argument, `\t`) ||
+			// 	strings.Contains(argument, `\r`) ||
+			// 	strings.Contains(argument, `\v`) ||
+			// 	strings.Contains(argument, `\f`) {
+			// 	fmt.Println("Non-printable sequences (e.g., \\n, \\t) are not considered for coloring")
+			// 	return
+			// }
 			if Isprintable(something) || Isprintable(argument) {
 				fmt.Println("Isprintable characters not allowed")
 				return

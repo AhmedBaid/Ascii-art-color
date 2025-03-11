@@ -1,13 +1,14 @@
 package functions
 
-import colors "ascii/tools"
+import (
+	colors "ascii/tools"
+)
 
 func PrintAsciiColor(SplitSlice []string, MapAscii map[rune][]string, argument, colorCode string) string {
 	var result string
 
 	for _, word := range SplitSlice {
 		indexes := IndexAll(word, argument)
-
 		if word != "" {
 			for line := 0; line < 8; line++ {
 				for i, char := range word {
