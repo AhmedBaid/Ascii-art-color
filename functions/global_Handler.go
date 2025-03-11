@@ -10,6 +10,12 @@ import (
 )
 
 func Handler(argument, banner, fileName, color, something string) {
+	fmt.Println(argument)
+	fmt.Println(something)
+	fmt.Println(banner)
+	fmt.Println(color)
+	fmt.Println(fileName)
+
 	// protect the files
 	banners := []string{"files/standard.txt", "files/shadow.txt", "files/thinkertoy.txt", "./files/standard.txt", "./files/shadow.txt", "./files/thinkertoy.txt"}
 	for _, bnr := range banners {
@@ -67,7 +73,7 @@ func Handler(argument, banner, fileName, color, something string) {
 				fmt.Println("Non-printable sequences (e.g., \\n, \\t) are not considered for coloring")
 				return
 			}
-			if Isprintable(something) {
+			if Isprintable(something) || Isprintable(argument) {
 				fmt.Println("Isprintable characters not allowed")
 				return
 			}

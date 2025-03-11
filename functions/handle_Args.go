@@ -24,11 +24,11 @@ func Handle_Args(Args []string) {
 	case len(os.Args) == 3:
 		if strings.HasPrefix(os.Args[1], "--color=") {
 			color = os.Args[1][8:]
-			something = os.Args[2]
 			if color == "" {
 				fmt.Println("you didn't specify the color")
 				return
 			}
+			something = os.Args[2]
 		} else if strings.HasPrefix(os.Args[1], "--output=") {
 			argument = os.Args[2]
 			if strings.HasSuffix(os.Args[1], ".txt") {
@@ -49,12 +49,12 @@ func Handle_Args(Args []string) {
 	case len(os.Args) == 4:
 		if strings.HasPrefix(os.Args[1], "--color=") {
 			color = os.Args[1][8:]
-			something = os.Args[3]
-			argument = os.Args[2]
 			if color == "" {
 				fmt.Println("you didn't specify the color")
 				return
 			}
+			argument = os.Args[2]
+			something = os.Args[3]
 		} else if strings.HasPrefix(os.Args[1], "--output=") {
 			argument = os.Args[2]
 			if strings.HasSuffix(os.Args[1], ".txt") {
@@ -75,20 +75,18 @@ func Handle_Args(Args []string) {
 	case len(os.Args) == 5:
 		if strings.HasPrefix(os.Args[1], "--color=") {
 			color = os.Args[1][8:]
-			argument = os.Args[2]
-			something = os.Args[3]
-			fileName = os.Args[4]
 			if color == "" {
 				fmt.Println("you didn't specify the color")
 				return
 			}
+			argument = os.Args[2]
+			something = os.Args[3]
+			fileName = os.Args[4]
 			if strings.HasSuffix(os.Args[4], ".txt") {
 				fileName = "files/" + os.Args[4]
 			} else {
 				fileName = "files/" + os.Args[4] + ".txt"
 			}
-		} else if strings.HasPrefix(os.Args[1], "--output=") {
-			fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER] \n\nEX: go run . --output=<fileName.txt> something standard")
 		} else {
 			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <something to be colored> \"something\"")
 			return
